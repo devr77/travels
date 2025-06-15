@@ -71,33 +71,13 @@ export default function Footer() {
           <h3 className="font-semibold text-blue-700 mb-3">Quick Links</h3>
           <ul className="space-y-2 text-gray-700 text-sm">
             <li>
-              <Link href="#home" className="hover:text-blue-600">
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link href="#services" className="hover:text-blue-600">
-                Services
-              </Link>
-            </li>
-            <li>
-              <Link href="#about" className="hover:text-blue-600">
-                About
-              </Link>
-            </li>
-            <li>
-              <Link href="#contact" className="hover:text-blue-600">
+              <Link href="/contact-us" className="hover:text-blue-600">
                 Contact
               </Link>
             </li>
             <li>
-              <Link href="/terms" className="hover:text-blue-600">
+              <Link href="/terms-conditions" className="hover:text-blue-600">
                 Terms & Conditions
-              </Link>
-            </li>
-            <li>
-              <Link href="/privacy" className="hover:text-blue-600">
-                Privacy Policy
               </Link>
             </li>
           </ul>
@@ -109,8 +89,6 @@ export default function Footer() {
             <li>Airport Transfers</li>
             <li>Outstation Rides</li>
             <li>Local City Travel</li>
-            <li>Corporate Cabs</li>
-            <li>Tour Packages</li>
           </ul>
         </div>
         {/* Contact */}

@@ -1,11 +1,82 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
+import React from "react";
 
 const today = new Date().toISOString().split("T")[0];
 
+const topCities = [
+  "Mumbai",
+  "Delhi",
+  "Bengaluru",
+  "Hyderabad",
+  "Ahmedabad",
+  "Chennai",
+  "Kolkata",
+  "Surat",
+  "Pune",
+  "Jaipur",
+  "Lucknow",
+  "Kanpur",
+  "Nagpur",
+  "Indore",
+  "Thane",
+  "Bhopal",
+  "Visakhapatnam",
+  "Pimpri-Chinchwad",
+  "Patna",
+  "Vadodara",
+];
+
 export default function Hero() {
   const [tripType, setTripType] = useState<"oneway" | "bothway">("oneway");
+  const [form, setForm] = useState({
+    passengers: "",
+    pickupCity: "",
+    pickupDate: today,
+    state: "",
+    dropCity: "",
+    pickupTime: "",
+  });
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [submitted, setSubmitted] = useState(false);
+
+  function validate() {
+    const newErrors: { [key: string]: string } = {};
+    if (
+      !form.passengers ||
+      Number(form.passengers) < 1 ||
+      Number(form.passengers) > 10
+    ) {
+      newErrors.passengers = "Enter 1-10 passengers";
+    }
+    if (!form.pickupCity.trim()) newErrors.pickupCity = "Pick up city required";
+    if (!form.pickupDate) newErrors.pickupDate = "Pick up date required";
+    if (!form.state) newErrors.state = "Select a state";
+    if (!form.dropCity.trim()) newErrors.dropCity = "Drop city required";
+    if (!form.pickupTime) newErrors.pickupTime = "Pick up time required";
+    return newErrors;
+  }
+
+  function handleChange(
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) {
+    setForm({ ...form, [e.target.name]: e.target.value });
+    setErrors({ ...errors, [e.target.name]: "" });
+  }
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      setSubmitted(false);
+      return;
+    }
+    setSubmitted(true);
+    // Handle form data here (e.g., send to API)
+    // alert("Form submitted!");
+  }
 
   return (
     <section className="relative bg-gradient-to-r from-blue-100 to-blue-50 pb-12">
@@ -53,7 +124,11 @@ export default function Hero() {
             </button>
           </div>
           {/* Form */}
-          <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <form
+            className="grid grid-cols-1 md:grid-cols-2 gap-6"
+            onSubmit={handleSubmit}
+            noValidate
+          >
             <div className="flex flex-col gap-3">
               <label className="font-semibold text-gray-700 mt-2">
                 No. of Passengers :
@@ -62,28 +137,64 @@ export default function Hero() {
                 type="number"
                 min={1}
                 max={10}
+                name="passengers"
+                value={form.passengers}
+                onChange={handleChange}
                 placeholder="No. of Passengers"
-                className="rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-200 font-semibold text-gray-700"
+                className={`rounded-lg border px-4 py-3 font-semibold text-gray-700 ${
+                  errors.passengers ? "border-red-500" : "border-gray-300"
+                }`}
                 required
               />
+              {errors.passengers && (
+                <span className="text-red-500 text-sm">
+                  {errors.passengers}
+                </span>
+              )}
               <label className="font-semibold text-gray-700">
                 Pick Up City
               </label>
-              <input
-                type="text"
-                placeholder="Pick Up City"
-                className="rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-200 font-semibold text-gray-700"
+              <select
+                name="pickupCity"
+                value={form.pickupCity}
+                onChange={handleChange}
+                className={`rounded-lg border px-4 py-3 font-semibold text-gray-700 ${
+                  errors.pickupCity ? "border-red-500" : "border-gray-300"
+                }`}
                 required
-              />
+              >
+                <option value="" disabled>
+                  Select Pick Up City
+                </option>
+                {topCities.map((city) => (
+                  <option key={city} value={city}>
+                    {city}
+                  </option>
+                ))}
+              </select>
+              {errors.pickupCity && (
+                <span className="text-red-500 text-sm">
+                  {errors.pickupCity}
+                </span>
+              )}
               <label className="font-semibold text-gray-700 mt-2">
                 Pick Up Date :
               </label>
               <input
                 type="date"
-                defaultValue={today}
-                className="rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-200 font-semibold text-gray-700"
+                name="pickupDate"
+                value={form.pickupDate}
+                onChange={handleChange}
+                className={`rounded-lg border px-4 py-3 font-semibold text-gray-700 ${
+                  errors.pickupDate ? "border-red-500" : "border-gray-300"
+                }`}
                 required
               />
+              {errors.pickupDate && (
+                <span className="text-red-500 text-sm">
+                  {errors.pickupDate}
+                </span>
+              )}
             </div>
             <div className="flex flex-col gap-3">
               {/* State Select */}
@@ -91,9 +202,13 @@ export default function Hero() {
                 State :
               </label>
               <select
-                className="rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-200 font-semibold text-gray-700"
+                name="state"
+                value={form.state}
+                onChange={handleChange}
+                className={`rounded-lg border px-4 py-3 font-semibold text-gray-700 ${
+                  errors.state ? "border-red-500" : "border-gray-300"
+                }`}
                 required
-                defaultValue=""
               >
                 <option value="" disabled>
                   Select State
@@ -104,31 +219,82 @@ export default function Hero() {
                 <option value="Punjab">Punjab</option>
                 <option value="Rajasthan">Rajasthan</option>
                 <option value="Madhya Pradesh">Madhya Pradesh</option>
+                <option value="Gujarat">Gujarat</option>
+                <option value="Maharashtra">Maharashtra</option>
+                <option value="Karnataka">Karnataka</option>
+                <option value="Tamil Nadu">Tamil Nadu</option>
+                <option value="Kerala">Kerala</option>
+                <option value="West Bengal">West Bengal</option>
+                <option value="Telangana">Telangana</option>
+                <option value="Andhra Pradesh">Andhra Pradesh</option>
+                <option value="Odisha">Odisha</option>
+                <option value="Bihar">Bihar</option>
+                <option value="Assam">Assam</option>
+                <option value="Jharkhand">Jharkhand</option>
+                <option value="Chhattisgarh">Chhattisgarh</option>
+                <option value="Uttarakhand">Uttarakhand</option>
+                <option value="Himachal Pradesh">Himachal Pradesh</option>
+                <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                <option value="Sikkim">Sikkim</option>
+                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
                 <option value="Other">Other</option>
               </select>
+              {errors.state && (
+                <span className="text-red-500 text-sm">{errors.state}</span>
+              )}
               <label className="font-semibold text-gray-700">Drop City</label>
-              <input
-                type="text"
-                placeholder="Drop City"
-                className="rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-200 font-semibold text-gray-700"
+              <select
+                name="dropCity"
+                value={form.dropCity}
+                onChange={handleChange}
+                className={`rounded-lg border px-4 py-3 font-semibold text-gray-700 ${
+                  errors.dropCity ? "border-red-500" : "border-gray-300"
+                }`}
                 required
-              />
+              >
+                <option value="" disabled>
+                  Select Drop City
+                </option>
+                {topCities.map((city) => (
+                  <option key={city} value={city}>
+                    {city}
+                  </option>
+                ))}
+              </select>
+              {errors.dropCity && (
+                <span className="text-red-500 text-sm">{errors.dropCity}</span>
+              )}
               <label className="font-semibold text-gray-700 mt-2">
                 Pick Up Time :
               </label>
               <input
                 type="time"
-                className="rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-200 font-semibold text-gray-700"
+                name="pickupTime"
+                value={form.pickupTime}
+                onChange={handleChange}
+                className={`rounded-lg border px-4 py-3 font-semibold text-gray-700 ${
+                  errors.pickupTime ? "border-red-500" : "border-gray-300"
+                }`}
                 required
               />
+              {errors.pickupTime && (
+                <span className="text-red-500 text-sm">
+                  {errors.pickupTime}
+                </span>
+              )}
             </div>
-            <div className="md:col-span-2 flex justify-center mt-2">
+            <div className="md:col-span-2 flex flex-col items-center mt-2">
               <button
                 type="submit"
                 className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold px-10 py-3 rounded-full shadow-lg text-lg transition"
               >
                 SUBMIT
               </button>
+              {submitted && (
+                <span className="text-green-600 font-semibold mt-3">
+                  Booking submitted successfully!
+                </span>
+              )}
             </div>
           </form>
         </div>

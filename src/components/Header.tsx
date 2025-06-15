@@ -12,13 +12,17 @@ export default function Header() {
         <div className="flex justify-between h-20 items-center">
           {/* Logo */}
           <div className="flex items-center gap-3">
-            <Image
-              src="/assets/logo.jpg"
-              alt="Delhi Travels Service"
-              width={48}
-              height={48}
-              className="rounded-full shadow-md border-2 border-blue-200"
-            />
+            <Link href="/">
+              {" "}
+              <Image
+                src="/assets/logo.jpg"
+                alt="Delhi Travels Service"
+                width={48}
+                height={48}
+                className="rounded-full shadow-md border-2 border-blue-200"
+              />
+            </Link>
+
             <span className="font-extrabold text-2xl text-blue-800 tracking-tight drop-shadow">
               Naina Tours & <span className="text-blue-500">Travels</span>
             </span>
@@ -26,28 +30,28 @@ export default function Header() {
           {/* Desktop Menu */}
           <div className="hidden md:flex gap-10 text-gray-700 font-semibold">
             <Link
-              href="#home"
+              href="/"
               className="hover:text-blue-700 transition-colors duration-200 relative group"
             >
               Home
               <span className="block h-0.5 bg-blue-500 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300" />
             </Link>
             <Link
-              href="#services"
+              href="/services"
               className="hover:text-blue-700 transition-colors duration-200 relative group"
             >
               Services
               <span className="block h-0.5 bg-blue-500 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300" />
             </Link>
             <Link
-              href="#about"
+              href="/about-us"
               className="hover:text-blue-700 transition-colors duration-200 relative group"
             >
               About
               <span className="block h-0.5 bg-blue-500 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300" />
             </Link>
             <Link
-              href="#contact"
+              href="/contact-us"
               className="hover:text-blue-700 transition-colors duration-200 relative group"
             >
               Contact
