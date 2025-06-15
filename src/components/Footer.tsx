@@ -10,14 +10,14 @@ export default function Footer() {
         <div>
           <div className="flex items-center gap-2 mb-3">
             <Image
-              src="/logo.png"
+              src="/assets/logo.jpg"
               alt="Delhi Travels Service"
               width={40}
               height={40}
               className="rounded-full"
             />
             <span className="font-bold text-xl text-blue-800">
-              Delhi Travels <span className="text-blue-500">Service</span>
+              Naina Tours & <span className="text-blue-500">Travels</span>
             </span>
           </div>
           <p className="text-gray-600 text-sm mb-4">

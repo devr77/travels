@@ -5,16 +5,14 @@ import { useState } from "react";
 const today = new Date().toISOString().split("T")[0];
 
 export default function Hero() {
-  const [tripType, setTripType] = useState<"oneway" | "bothway" | "local">(
-    "oneway"
-  );
+  const [tripType, setTripType] = useState<"oneway" | "bothway">("oneway");
 
   return (
     <section className="relative bg-gradient-to-r from-blue-100 to-blue-50 pb-12">
       {/* Top Banner with City Silhouette and Car */}
       <div className="w-full h-56 md:h-64 relative flex flex-col items-center justify-center">
         <Image
-          src="/assets/4.jpg"
+          src="/assets/banner.png"
           alt="City Silhouette"
           fill
           className="object-cover object-top pointer-events-none"
@@ -22,7 +20,7 @@ export default function Hero() {
           priority
         />
         <div className="relative z-10 flex flex-col items-center pt-6">
-          <span className="text-blue-800 font-extrabold text-xl md:text-2xl drop-shadow-lg">
+          <span className="text-red-800 font-extrabold text-xl md:text-2xl drop-shadow-lg">
             +91 8377962159
           </span>
         </div>
@@ -53,20 +51,21 @@ export default function Hero() {
             >
               Both-way
             </button>
-            <button
-              className={`px-6 py-2 rounded-full font-bold text-white shadow transition ${
-                tripType === "local"
-                  ? "bg-green-600 scale-105"
-                  : "bg-green-400 hover:bg-green-500"
-              }`}
-              onClick={() => setTripType("local")}
-            >
-              Local
-            </button>
           </div>
           {/* Form */}
           <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="flex flex-col gap-3">
+              <label className="font-semibold text-gray-700 mt-2">
+                No. of Passengers :
+              </label>
+              <input
+                type="number"
+                min={1}
+                max={10}
+                placeholder="No. of Passengers"
+                className="rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-200 font-semibold text-gray-700"
+                required
+              />
               <label className="font-semibold text-gray-700">
                 Pick Up City
               </label>
@@ -87,6 +86,26 @@ export default function Hero() {
               />
             </div>
             <div className="flex flex-col gap-3">
+              {/* State Select */}
+              <label className="font-semibold text-gray-700 mt-2">
+                State :
+              </label>
+              <select
+                className="rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-200 font-semibold text-gray-700"
+                required
+                defaultValue=""
+              >
+                <option value="" disabled>
+                  Select State
+                </option>
+                <option value="Delhi">Delhi</option>
+                <option value="Haryana">Haryana</option>
+                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                <option value="Punjab">Punjab</option>
+                <option value="Rajasthan">Rajasthan</option>
+                <option value="Madhya Pradesh">Madhya Pradesh</option>
+                <option value="Other">Other</option>
+              </select>
               <label className="font-semibold text-gray-700">Drop City</label>
               <input
                 type="text"

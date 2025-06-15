@@ -7,7 +7,7 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav className="bg-gradient-to-r from-blue-50 via-white to-blue-100 shadow-lg sticky top-0 z-50 transition-all duration-300">
+    <nav className="bg-gradient-to-r from-orange-50 via-white to-orange-100 shadow-lg sticky top-0 z-50 transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12">
         <div className="flex justify-between h-20 items-center">
           {/* Logo */}
@@ -20,7 +20,7 @@ export default function Header() {
               className="rounded-full shadow-md border-2 border-blue-200"
             />
             <span className="font-extrabold text-2xl text-blue-800 tracking-tight drop-shadow">
-              Delhi Travels <span className="text-blue-500">Service</span>
+              Naina Tours & <span className="text-blue-500">Travels</span>
             </span>
           </div>
           {/* Desktop Menu */}
